@@ -10,7 +10,21 @@
     tools:context="eliel.eden.thatsmyspot.MainActivity">
 
     <TextView
+        android:id="@+id/tillTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:text="tillTime"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="112dp" />
+
+    <TextView
+        android:id="@+id/movieText"
+        android:text="movieText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tillTime"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
