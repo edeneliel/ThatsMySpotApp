@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "710189716292",
+    "firebase_url": "https://thatsmyspot-16f2c.firebaseio.com",
+    "project_id": "thatsmyspot-16f2c",
+    "storage_bucket": "thatsmyspot-16f2c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:710189716292:android:3560479bd30d328a",
+        "android_client_info": {
+          "package_name": "eliel.eden.thatsmyspot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "710189716292-qkc2dttbjrsisv5b4vq63j0j9j26l8s0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeSoaQm15QAYDWEp2V0-Rt4I-lMywYDrE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
