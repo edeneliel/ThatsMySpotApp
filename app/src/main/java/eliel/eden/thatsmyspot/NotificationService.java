@@ -67,7 +67,7 @@ public class NotificationService extends IntentService {
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         };
-        FirebaseDatabase.getInstance().getReference().addChildEventListener(a);
+        FirebaseDatabase.getInstance().getReference("Movies").addChildEventListener(a);
     }
 
     private void setNotification(){
