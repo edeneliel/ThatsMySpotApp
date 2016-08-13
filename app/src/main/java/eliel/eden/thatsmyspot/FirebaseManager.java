@@ -11,18 +11,13 @@ import com.google.firebase.database.FirebaseDatabase;
 public class FirebaseManager {
     private MainActivity _mainActivity;
     private static FirebaseDatabase _firebaseInstance;
-    private boolean _first;
 
     public FirebaseManager(MainActivity mainActivity){
         _mainActivity = mainActivity;
 
-        if (_firebaseInstance != null)
-            return;
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         _firebaseInstance = FirebaseDatabase.getInstance();
 
         setChildEventForMain();
-        _first = true;
     }
 
     public void setChildEventForMain(){
@@ -32,20 +27,12 @@ public class FirebaseManager {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 _mainActivity.setMovieTitleText(dataSnapshot.getKey());
                 _mainActivity.setTillTimeText(dataSnapshot.getValue().toString());
-                if (_first)
-                    _first = false;
-                else
-                    _mainActivity.makeNotification();
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 _mainActivity.setMovieTitleText(dataSnapshot.getKey());
                 _mainActivity.setTillTimeText(dataSnapshot.getValue().toString());
-                if (_first)
-                    _first = false;
-                else
-                    _mainActivity.makeNotification();
             }
 
             @Override
