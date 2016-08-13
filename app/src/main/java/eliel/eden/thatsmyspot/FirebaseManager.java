@@ -42,6 +42,9 @@ public class FirebaseManager {
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         };
-        _firebaseInstance.getReference().addChildEventListener(childListener);
+        _firebaseInstance.getReference("Movies").addChildEventListener(childListener);
+    }
+    public void setStopFlag(boolean stopFlag){
+        _firebaseInstance.getReference().child("stopFlag").setValue(stopFlag);
     }
 }
