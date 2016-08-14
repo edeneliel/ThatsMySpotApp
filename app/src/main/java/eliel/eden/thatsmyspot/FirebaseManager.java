@@ -44,7 +44,4 @@ public class FirebaseManager {
         };
         _firebaseInstance.getReference("Movies").addChildEventListener(childListener);
     }
-    public void setStopFlag(boolean stopFlag){
-        _firebaseInstance.getReference().child("stopFlag").setValue(stopFlag);
-    }
 }

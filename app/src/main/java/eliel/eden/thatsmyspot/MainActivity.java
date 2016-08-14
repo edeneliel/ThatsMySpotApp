@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -18,8 +19,18 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketAddress;
+
 
 public class MainActivity extends AppCompatActivity {
+    private final int PORT = 6789;
+    private final int TIMEOUT_TCP_CONNECTION = 5000;
+
     private FirebaseManager _firebase;
     private Toast _toast;
     private TextView _movieTitle;
@@ -42,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
         _tillTime = (TextView) findViewById(R.id.tillTime);
         _stopBtn = (Button) findViewById(R.id.stopBtn);
 
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         setStopButton();
     }
 
@@ -51,9 +65,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                     if(which == DialogInterface.BUTTON_POSITIVE) {
                         if (isNetworkAvailable()) {
-                            _firebase.setStopFlag(true);
-                            _toast.setText("Spot Saver stopped");
-
+                            if (sendTcpStopRequest())
+                                _toast.setText("Spot Saver stopped");
+                            else
+                                _toast.setText("Server having troubles");
                         }
                         else {
                             _toast.setText("No internet connection");
@@ -89,5 +104,19 @@ public class MainActivity extends AppCompatActivity {
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+    private boolean sendTcpStopRequest(){
+        Socket clientSocket = new Socket();
+        try {
+            System.out.println(R.string.pc_ip);
+            clientSocket.connect(new InetSocketAddress(getResources().getString(R.string.pc_ip), PORT),TIMEOUT_TCP_CONNECTION);
+            DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
+            outToServer.writeBytes("true");
+            clientSocket.close();
+            outToServer.close();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
     }
 }
